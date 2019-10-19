@@ -18,9 +18,10 @@ pilImage = Image.fromarray(image)
 draw = ImageDraw.Draw(pilImage, 'RGBA')
 
 for faceLandmark in faceLandmarksList:
-    draw.line(faceLandmark["left_eyebrow"], fill=(128,0,128,100), width=7)
-    draw.line(faceLandmark["right_eyebrow"], fill=(128,0,128,100), width=7)
+    draw.polygon(faceLandmark["left_eyebrow"], fill=(128,0,128,100))
+    draw.polygon(faceLandmark["right_eyebrow"], fill=(128,0,128,100))
     draw.polygon(faceLandmark["top_lip"], fill=(128,0,128,100))
     draw.polygon(faceLandmark["bottom_lip"], fill=(128,0,128,100))
+    draw.line(faceLandmark["nose_bridge"], fill = (128,0,128, 100), width=7)
 
 pilImage.show()
