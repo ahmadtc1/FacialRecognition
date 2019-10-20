@@ -1,12 +1,20 @@
 import PIL.Image
 import PIL.ImageDraw
 import face_recognition
+import argparse
 
 #TODO: Add a command line argument to allow users to specify the picture they would like to run face detection on
-
+ap = argparse.ArgumentParser()
+ap.add_argument(
+    "-i",
+    "--image",
+    required=True,
+    help="Path the the image to be used"
+)
+args = vars(ap.parse_args())
 
 #Load in the file as a numpy array
-image = face_recognition.load_image_file("faces.jpg")
+image = face_recognition.load_image_file(args["image"])
 
 #Find all the faces in the image
 #Run the face_detection HOG window slider to find faces
