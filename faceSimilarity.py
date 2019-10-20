@@ -26,18 +26,22 @@ for imagePath in tqdm(Path("people").glob("*.jpg")):
     print("The image path is {}".format(imagePath))
     unknownImage = face_recognition.load_image_file(imagePath)
     unknownFaceEncodings = face_recognition.face_encodings(unknownImage)
-    faceDistance = face_recognition.face_distance(unknownFaceEncodings, knownImageEncoding)[0]
-    print("The face distance is {}".format(faceDistance))
+    try:
+        faceDistance = face_recognition.face_distance(unknownFaceEncodings, knownImageEncoding)[0]
+        print("The face distance is {}".format(faceDistance))
+        if faceDistance < bestFaceDistance:
+            bestFaceDistance = faceDistance
+            bestFaceImage = imagePath
 
-    if faceDistance < bestFaceDistance:
-        bestFaceDistance = faceDistance
-        bestFaceImage = imagePath
+    except Exception as e:
+        print(e)
+        pass
 
 bestMatch = face_recognition.load_image_file(bestFaceImage)
 pilBestMatchImage = Image.fromarray(bestMatch)
 
 pilOriginalImage = Image.fromarray(knownImage)
 
+print("The best image distance is {}".format(bestFaceDistance))
 pilOriginalImage.show()
 pilBestMatchImage.show()
-
